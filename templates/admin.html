@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ % static 'css/styles.css' % }}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      
+</head>
+<body>
+    <div class="login-container" id="login-container">
+        <div class="login-box">
+            <div class="login-logo">
+                <i class="fas fa-running"></i>
+            </div>
+            <h2>Admin Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="admin-panel" style="display: none;">
+        
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-running"></i>
+                <h3>Admin</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li data-section="users">
+                    <i class="fas fa-users"></i>
+                    <span>Registered Users</span>
+                </li>
+                <li data-section="contributions">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Contributions</span>
+                </li>
+                <li data-section="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </li>
+                <li id="admin-management-menu-item" data-section="admins" style="display: none;">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin Management</span>
+                </li>
+                <li id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-content" id="main-content">
+            <div class="header">
+                <div style="display: flex; align-items: center;">
+                    <div class="menu-toggle" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <h2 id="main-content-title">Dashboard</h2>
+                </div>
+                <div class="user-info">
+                    <img src="abdul.jpeg" alt="User" id="user-avatar"> <span id="current-user-role"></span>
+                </div>
+            </div>
+
+            <div id="dashboard-section" class="content-section">
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Registered </h4>
+                            <div class="card-icon users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="registered-users-count">0</h3>
+                            <p>Total Registrations</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Total Contributions</h4>
+                            <div class="card-icon contributors">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="total-contributions-amount">Tshs. 0</h3>
+                            <p>All time</p>
+                        </div>
+                    </div>
+                    <div class="card" id="admin-counter-card">
+                        <div class="card-header" >
+                            <h4>Admins</h4>
+                            <div class="card-icon admins">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="admins-count">0</h3>
+                            <p>Total Admins</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>New Notifications</h4>
+                            <div class="card-icon payments">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 id="new-notifications-count">0</h3>
+                            <p>Unread alerts</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3>Recent Registrations</h3>
+                        <button class="btn btn-primary" id="add-registration-btn">
+                            <i class="fas fa-plus"></i> Add Registration
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="registrations-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Ticket Price</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registrations-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                
+                <div class="table-container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3>Recent Contributions</h3>
+                        <button class="btn btn-primary" id="add-contribution-btn">
+                            <i class="fas fa-plus"></i> Add Contribution
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="contributions-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Amount</th>
+                                    <th>Payment Method</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contributions-body">
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            
+                <div class="table-container" id="admin-management">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3>Admin Management</h3>
+                        <button class="btn btn-primary" id="add-admin-btn">
+                            <i class="fas fa-plus"></i> Add Admin
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="admins-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admins-body">
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="users-section" class="content-section" style="display: none;">
+                <div class="table-container">
+                    <h3>All Registered </h3>
+                    <div class="table-responsive">
+                        <table id="all-users-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Ticket Price</th>
+                                    <th>Registration Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-users-body">
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contributions-section" class="content-section" style="display: none;">
+                <div class="table-container">
+                    <h3>All Contributions</h3>
+                    <div class="table-responsive">
+                        <table id="all-contributions-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Amount</th>
+                                    <th>Payment Method</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-contributions-body">
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="admins-section" class="content-section" style="display: none;">
+                <div class="table-container">
+                    <h3>Admin Management</h3>
+                    <div class="table-responsive">
+                        <table id="all-admins-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-admins-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="notifications-section" class="content-section" style="display: none;">
+                <div class="table-container">
+                    <h3>Notifications</h3>
+                    <div class="table-responsive">
+                        <table id="notifications-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Message</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="notifications-body">
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="notification-container" id="notification-container">
+    
+    </div>
+
+
+    <div class="modal" id="add-registration-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Registration</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="add-registration-form">
+                <div class="form-group">
+                    <label for="reg-first-name">First Name</label>
+                    <input type="text" id="reg-first-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-last-name">Last Name</label>
+                    <input type="text" id="reg-last-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-contact">Contact</label>
+                    <input type="text" id="reg-contact" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-ticket-price">Ticket Price</label>
+                    <input type="number" id="reg-ticket-price" class="form-control" step="0.01" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger close-modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="add-contribution-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Contribution</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="add-contribution-form">
+                <div class="form-group">
+                    <label for="con-first-name">First Name</label>
+                    <input type="text" id="con-first-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="con-last-name">Last Name</label>
+                    <input type="text" id="con-last-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="con-email">Email</label>
+                    <input type="email" id="con-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="con-contact">Contact</label>
+                    <input type="text" id="con-contact" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="con-amount">Amount</label>
+                    <input type="number" id="con-amount" class="form-control" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="con-payment-method">Payment Method</label>
+                    <select id="con-payment-method" class="form-control" required>
+                        <option value="Crdb Bank">Crdb Bank</option>
+                        <option value="NBC Bank">NBC Bank</option>
+                        <option value="Voda">Voda</option>
+                        <option value="Mixx by Yas">Mixx by Yas</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger close-modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Add Contribution</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="add-admin-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Admin</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="add-admin-form">
+                <div class="form-group">
+                    <label for="admin-first-name">First Name</label>
+                    <input type="text" id="admin-first-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-last-name">Last Name</label>
+                    <input type="text" id="admin-last-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-email">Email</label>
+                    <input type="email" id="admin-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-contact">Contact</label>
+                    <input type="text" id="admin-contact" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-role">Role</label>
+                    <select id="admin-role" class="form-control" required>
+                        <option value="admin">Admin</option>
+                        <option value="super-admin">Super Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" class="form-control" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger close-modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Add Admin</button>
+                </div>
+            </form>
+        </div>
+    </div>
+   <script src=""{{ % static 'css/script.js' % }}""></script>
+</body>
+</html>
