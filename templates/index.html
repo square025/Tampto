@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+ {% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tampro</title>
+    <link rel="stylesheet" href="{% static "css/index.css" %}">
+    
+</head>
+<body>
+    <header id="top">
+        <div id="header-left">
+            <img src="{% static "images/tampro-logo-01.png" %}" alt="">
+            <h2>Tampro</h2>
+        </div>
+        <div id="header-middle">
+            <div class="links" id="link1">
+                <a href="#sec3">Ticket</a>
+            </div>
+            <div class="links" id="link3">
+                <a href="#sec4-two1">About Us</a>
+            </div>
+            <div class="links" id="link2">
+                <a href="#footer1">Contact</a>
+            </div>
+        </div>
+        <div id="header-right">
+            <button>
+                <a href="{% url 'register' %}">Jisajili</a>
+            </button>
+            <button>
+                <a href="{% url 'contribution' %}">changia</a>
+            </button>
+        </div>
+    </header>
+    <main>
+        <section class="sec1">
+            <div id="sec1-all">
+
+            </div>
+        </section>
+        <section class="sec2">
+            <div id="sec2-up">
+                <h1>Tampro <span>Marathon</span> 2025</h1>
+            </div>
+            <div id="sec2-middle">
+                <p>Tampro Marathon 2025 ni mashindano maalum ya riadha yenye umbali wa kilomita 5
+                    yatakayofanyika tarehe 22 Juni 2025. Tukio hili litawahusisha watoto
+                    na watu wazima, likiwa na lengo la kuhamasisha afya bora,
+                    mshikamano wa kijamii na kukuza vipaji vya michezo kwa vijana.
+                    <br>
+                    Mashindano haya yanasimamiwa na kuendeshwa kikamilifu na Tampro,
+                     shirika linalojitolea kuinua viwango vya michezo nchini.
+                    Kiingilio kwa kila mtu mzima ni Tsh 40,000 wakati kwa watoto ni Tsh 20,000.
+                    Ada hii inahakikisha usalama, huduma muhimu,
+                    pamoja na zawadi kwa washiriki watakaoibuka kidedea.
+                    <br>
+                    Kwa maelezo zaidi, michango na usajili, tembelea kurasa rasmi za Tampro au
+                    wasiliana nasi kupitia njia rasmi zilizotolewa.<a href="#footer1">Tampro team</a> 
+                </p>
+            </div>
+            <div id="sec2-bottom">
+                <div id="countdown">
+                    {{ day }}d {{ hours }}h {{ minutes }}m {{ seconds }}s
+                </div>
+                
+            </div>
+        </section>
+        <section id="sec3" class="sec3">
+            <h2><b>Chagua ticket</b></h2>
+        </section>
+        <section id="sec4" class="sec4">
+            <div id="sec3-tickets1">
+                <img class="ticket" src="{% static "images/ticket1.jpg" %}" alt="#">
+                <p>price: 40,000/=</p>
+                <button>
+                    <a href="{% url 'register' %}">NUNUA TICKET</a>
+                </button>
+            </div>
+            <div id="sec3-tickets2">
+                <img class="ticket" src="{% static "images/ticket2.jpg" %}" alt="#">
+                <p>price: 20,000/=</p>
+                <button>
+                    <a href="{% url 'register' %}">NUNUA TICKET</a>
+                </button>
+            </div>
+        </section>
+        <img class="back" src="{% static "images/VIING-SQUIZ2.png" %}" alt="">
+        <section id="sec4-two1" class="sec4-two">
+            <h1>About Us</h1>
+        </section>
+        <section class="sec5">
+            <div id="sec5-middle">
+                <img src="{% static "images/running.jpeg" %}" alt="#">
+            </div>
+            <div id="sec5-left">
+                <h2>Shoot Up Endurance with running</h2>
+                <p>Tampro Marathon 2025 si tu mbio za kushindana, bali ni fursa ya
+                    familia kushiriki pamoja katika tukio la kujenga afya, furaha na
+                    maadili ya mshikamano. Washiriki wanahimizwa kujiandaa mapema
+                    na kujisajili kwa wakati ili kuwa sehemu ya tukio hili la kihistoria.
+                </p>
+            </div>
+            <div id="sec5-right">
+                <div id="sec5-right-up">
+                    <p>
+                        Usikose kuwa sehemu ya historia, Jisajili mapema.
+                    </p>
+                    <p>
+                       <em><b> "Kimbia kwa Afya, Saidia jamii!" </b></em>
+                    </p>
+                </div>
+                <div id="sec5-right-bottom">
+                    <p>Jiunge na Tampro Marathon 2025 tarehe 22 Juni! Kimbia
+                        na familia yako kilomita 5 kwa afya, furaha na mshikamano.
+                        Zawadi, burudani na uzoefu wa kipekee vinakusubiri.
+                        Usikose! Jisajili leo. Kimbia kwa Afya, Saidia jamii!
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer id="footer1">
+        <div id="footer-one">
+            <img src="{% static "images/tampro-logo-01.png" %}" alt="#">
+        </div>
+        <div id="footer-two">
+            <h3>Contact</h3>
+            <ul>
+                <li>
+                    <p>+255 714 151 532</p>
+                </li>
+                <li>
+                    <p>+255 767 151 532</p>
+                </li>
+                <li>
+                    <p>+255 657 942 495</p>
+                </li>
+                <li>
+                    <p>+255 657 338 792</p>
+                </li>
+            </ul>
+        </div>
+        <div id="footer-three">
+            <h3>Email Address</h3>
+            <p>tampro.habari.tehama@gmail.com</p>
+        </div>
+        <div id="footer-four">
+            <h3>Feed us Through:</h3>
+            <ul>
+                <li>
+                    <p>+255 657 942 495</p>
+                </li>
+                <li>
+                    <p>+255 657 338 792</p>
+                </li>
+                <li>
+                    &copy; 2025 Tampro Marathon. All rights reserved.
+                </li>
+            </ul>
+        </div>
+    </footer>
+    <img class="back" src="{% static "images/SQUEEZ-WALK-22.png" %}" alt="#">
+<script>
+    // Pass the event date from Django to JS
+    window.eventDate = "{{ event_date_iso }}";
+</script>
+<script src="{% static 'js/index.js' %}"></script>
+</body>
+</html>

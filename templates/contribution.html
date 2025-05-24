@@ -1,0 +1,164 @@
+
+<html lang="en">
+  {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribution</title>
+    <link rel="stylesheet" href="{% static "css/contribution.css" %}">
+</head>
+<body>
+   
+
+<div class="form-container" >
+    <div class="form-header">
+  <a href="{% url 'register' %}">Register</a>
+  <a href="{% url 'contribution' %}">Contribution</a>
+</div>
+  <h2>Personal Detail's</h2>
+  <p>Sorry, May you please provide your details for more clarifications .</p>
+<form action="{% url 'contribution' %}" method="POST" id="xp">
+  {% csrf_token %}
+  <div class="form-row">
+    <input type="text" class="input-style" name="fname" id="fname" placeholder="First Name" required>
+    <input type="text" class="input-style" name="lname" id="lname" placeholder="Last Name" required>
+  </div>
+
+  <div class="form-row">
+    <input type="email" class="input-style" name="email" id="email" placeholder="Email" required>
+    <input type="tel" class="input-style" name="phone_no" title="Enter a valid Tanzanian number (xxxx xxx xxx)" id="tel" placeholder="+255..." required>
+  </div>
+
+  <div class="form-row">
+    <select class="input-style" id="region" name="region" required>
+      <option value=""> Region</option>
+       <option value="Arusha">Arusha</option>
+      <option value="Dar es Salaam">Dar es Salaam</option>
+      <option value="Dodoma">Dodoma</option>
+      <option value="Geita">Geita</option>
+      <option value="Iringa">Iringa</option>
+      <option value="Kagera">Kagera</option>
+      <option value="Katavi">Katavi</option>
+      <option value="Kigoma">Kigoma</option>
+      <option value="Kilimanjaro">Kilimanjaro</option>
+      <option value="Lindi">Lindi</option>
+      <option value="Manyara">Manyara</option>
+      <option value="Mara">Mara</option>
+      <option value="Mbeya">Mbeya</option>
+      <option value="Morogoro">Morogoro</option>
+      <option value="Mtwara">Mtwara</option>
+      <option value="Mwanza">Mwanza</option>
+      <option value="Njombe">Njombe</option>
+      <option value="Pemba North">Pemba North</option>
+      <option value="Pemba South">Pemba South</option>
+      <option value="Pwani">Pwani</option>
+      <option value="Rukwa">Rukwa</option>
+      <option value="Ruvuma">Ruvuma</option>
+      <option value="Shinyanga">Shinyanga</option>
+      <option value="Simiyu">Simiyu</option>
+      <option value="Singida">Singida</option>
+      <option value="Tabora">Tabora</option>
+      <option value="Tanga">Tanga</option>
+      <option value="Zanzibar Central/South">Zanzibar Central/South</option>
+      <option value="Zanzibar North">Zanzibar North</option>
+      <option value="Zanzibar Urban/West">Zanzibar Urban/West</option>
+    </select>
+    
+
+    <select class="input-style" id="region" name="regions" required>
+      <option value="">Nationality</option>
+         <option value="Australia">Australia</option>
+    <option value="Brazil">Brazil</option>
+    <option value="Canada">Canada</option>
+    <option value="China">China</option>
+    <option value="Egypt">Egypt</option>
+    <option value="France">France</option>
+    <option value="Germany">Germany</option>
+    <option value="India">India</option>
+    <option value="Italy">Italy</option>
+    <option value="Japan">Japan</option>
+    <option value="Kenya">Kenya</option>
+    <option value="Mexico">Mexico</option>
+    <option value="Nigeria">Nigeria</option>
+    <option value="Russia">Russia</option>
+    <option value="Saudi Arabia">Saudi Arabia</option>
+    <option value="South Africa">South Africa</option>
+    <option value="South Korea">South Korea</option>
+    <option value="Spain">Spain</option>
+    <option value="Tanzania">Tanzania</option>
+    <option value="Turkey">Turkey</option>
+    <option value="United Arab Emirates">United Arab Emirates</option>
+    <option value="United Kingdom">United Kingdom</option>
+    <option value="United States">United States</option>
+    </select>
+  </div>
+  <div class="form-row">
+  <input type="number" class="input-style" name="amount" id="amount" placeholder="Enter Amount" required>
+  <select class="input-style" name="payment" id="paymentMethod" onchange="togglePaymentImage()" required>
+    <option value="">Payment Method</option>
+    <option value="mobile">Mobile Pay</option>
+    <option value="bank">Bank</option>
+  </select>
+</div>
+<p>  Account Name :<b> TANZANIA MUSLIM PROFESSIONALS</b></p>
+<div class="form-row" id="paymentImages" style="display: none; flex-wrap: wrap; gap: 10px;">
+
+  <img class="sim" id="mobileImage1" src="{% static "images/voda.jpg" %}" alt="Mobile Payment 1" style="width: 48%; display: none;">
+  <img class="sim" id="mobileImage2" src="{% static "images/tigo.jpg" %}" alt="Mobile Payment 2" style="width: 48%; display: none;">
+
+  <img class="sim" id="bankImage1" src="{% static "images/nbc.jpg" %}" alt="Bank Payment 1" style="width: 48%; display: none;">
+  <img class="sim" id="bankImage2" src="{% static "images/crdb.jpg" %}" alt="Bank Payment 2" style="width: 48%; display: none;">
+</div>
+ <label>  <input type="checkbox"  required> Agree to the terms and conditions</label>
+  
+    
+  
+ 
+  
+  <button type="submit" >Submit</button>
+
+</form>
+<div id="home1">
+        <a href="{% url 'index' %}" id="home">home</a>
+      </div>
+</div>
+<script>
+
+  function togglePaymentImage() {
+    const method = document.getElementById("paymentMethod").value;
+
+    
+    const mobileImg1 = document.getElementById("mobileImage1");
+    const mobileImg2 = document.getElementById("mobileImage2");
+
+    
+    const bankImg1 = document.getElementById("bankImage1");
+    const bankImg2 = document.getElementById("bankImage2");
+
+    const wrapper = document.getElementById("paymentImages");
+
+    if (method === "bank") {
+      bankImg1.style.display = "block";
+      bankImg2.style.display = "block";
+      mobileImg1.style.display = "none";
+      mobileImg2.style.display = "none";
+      wrapper.style.display = "flex";
+    } else if (method === "mobile") {
+      bankImg1.style.display = "none";
+      bankImg2.style.display = "none";
+      mobileImg1.style.display = "block";
+      mobileImg2.style.display = "block";
+      wrapper.style.display = "flex";
+    } else {
+      bankImg1.style.display = "none";
+      bankImg2.style.display = "none";
+      mobileImg1.style.display = "none";
+      mobileImg2.style.display = "none";
+      wrapper.style.display = "none";
+    }
+  }
+
+</script>
+</body>
+
+</html>

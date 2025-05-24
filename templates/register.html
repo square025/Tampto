@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Event Registration</title>
+  <link rel="stylesheet" href="{% static "css/registration.css" %}">
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <a href="{% url 'register' %}">Register</a>
+      <a href="{% url 'contribution' %}">Contribution</a>
+    </div>
+    
+    <h3>Register Here</h3>
+    <p>Start your Registration now!</p>
+
+    <form id="registrationForm" action="{% url 'registration' %}" method="POST">
+      {% csrf_token %}
+      <div class="form-row">
+        <input type="text" id="fname" name="fname" class="input-style" placeholder="First Name" required />
+        <input type="text" id="lname" name="lname" class="input-style" placeholder="Last Name" required />
+      </div>
+
+      <div class="form-row">
+        <input type="email" id="email" name="email" class="input-style" placeholder="Email" required />
+        <input type="tel" id="tel" name="phone_no" class="input-style" placeholder="+255..." p title="Enter a valid Tanzanian number (xxxx xxx xxx)" required />
+      </div>
+
+      <div class="form-row">
+        <select id="gender" name="gender" class="input-style" required>
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+
+        <select id="tshirt" name="tshirt" class="input-style" required>
+          <option value="">T-Shirt Size</option>
+          <option value="S">S (Small)</option>
+          <option value="M">M (Medium)</option>
+          <option value="L">L (Large)</option>
+          <option value="XL">XL (Extra Large)</option>
+        </select>
+      </div>
+
+      <div class="category-section">
+        <div class="category-title">Ticket Category:</div>
+        <div class="category-options">
+          <div name="adult" id="one" class="category-option" onclick="selectCategory(this, 'adult')">
+            <img src="{% static "images/child.jpg" %}" alt="Children Ticket" class="category-image">
+            <span class="category-label">Adults (Tsh 40,000/=)</span>
+          </div>
+          <div name="child" id="two" class="category-option" onclick="selectCategory(this, 'child')">
+            <img src="{% static "images/adult.jpg" %}" alt="Adults Ticket" class="category-image">
+            <span class="category-label">Children (Tsh 20,000/=)</span>
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" id="category" name="category" required />
+
+      <div class="checkbox-container">
+        <input type="checkbox" id="terms" name="terms" required />
+        <label for="terms">I accept the terms and conditions</label>
+      </div>
+
+      <button type="submit">Register Now</button>
+      <div id="home1">
+        <a href="{% url 'index' %}" id="home">home</a>
+      </div>
+
+      <div class="terms">
+        <p>Click here to Register.</p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    let selectedCategory = null;
+
+    function selectCategory(element, category) {
+     
+      document.querySelectorAll('.category-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+  
+      element.classList.add('selected');
+      document.getElementById('category').value = category;
+      selectedCategory = category;
+    }
+
+    document.getElementById('registrationForm').addEventListener('submit', function (e) {
+      if (!selectedCategory) {
+        alert('Please select a ticket category to continue');
+        e.preventDefault();
+        return;
+      }
+      
+      if (!document.getElementById('terms').checked) {
+        alert('Please accept the terms and conditions');
+        e.preventDefault();
+        return;
+      }
+      
+    
+      alert('Successfully Registered! We will contact you through email or phone.');
+      
+    });
+  </script>
+</body>
+</html>
