@@ -289,12 +289,6 @@ const adminCounterCard = document.getElementById('admin-counter-card');
         notificationsBody.appendChild(row);
     });
 
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
     document.querySelectorAll('.notification-status-badge').forEach(badge => {
         badge.addEventListener('click', function() {
             const notifId = parseInt(this.getAttribute('data-id'));
@@ -541,6 +535,12 @@ function getCookie(name) {
 
 
 function fetchAll(){
+    function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
     const reBody = document.getElementById("registrations-body");
     const coBody = document.getElementById("contributions-body");
     let xhr = new XMLHttpRequest();
