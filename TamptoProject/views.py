@@ -86,7 +86,7 @@ def registration(request):
         return redirect('index')
     return render(request, 'register.html')
 
-@csrf_exempt
+# @csrf_exempt
 def get_db(request):
     try:
         if request.method == "POST":
