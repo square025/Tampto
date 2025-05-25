@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 from .models import michango ,sajili
+import sqlite3
+import json
+
 
 # Create your views here.
 
@@ -26,6 +29,9 @@ def index(request):
 
 def register(request):
     return render(request, 'register.html')
+
+def admin(request):
+    return render(request, 'admin.html')
 
 def contribution(request):
     if request.method == "POST":
@@ -79,3 +85,12 @@ def registration(request):
     return render(request, 'register.html')
 
 
+def getDatabase(request):
+    if request.method == "POST":
+        dbx = sqlite3.connect("db.sqlite3")
+        cursor = dbx.cursor()
+
+        jisajili = cursor.execute("SELECT * FROM TamptoProject_sajili").fetchall()
+        michango = cursor.execute("SELECT * FROM TamptoProject_michango").fetchall()
+
+        return json.dumps({"jisajili":jisajili, "michango":michango})
