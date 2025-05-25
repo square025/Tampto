@@ -27,7 +27,10 @@ SECRET_KEY = "django-insecure-vd76ibw8db_4b*i*tjo!8um8-z&ldx!8)zjv9ktksmh$$juw(@
 DEBUG = True
 
 ALLOWED_HOSTS = ['tampto.onrender.com','tampro.run']
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://tampto.onrender.com',
+    'https://tampro.run',
+]
 
 # Application definition
 
