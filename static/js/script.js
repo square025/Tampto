@@ -534,4 +534,20 @@ const adminCounterCard = document.getElementById('admin-counter-card');
         document.getElementById('sidebar').classList.toggle('active');
     });
 
-    
+
+function fetchAll(){
+    const reBody = document.getElementById("registrations-body");
+    const coBody = document.getElementById("contributions-body");
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/get_db", true);
+    xhr.send();
+    xhr.onload = ()=>{
+        if(xhr.status == 200 && xhr.readyState == 4){
+            let jsonRSP = JSON.parse(xhr.responseText);
+            console.log(jsonRSP);
+        }
+    }
+}
+
+
+fetchAll();

@@ -85,12 +85,15 @@ def registration(request):
     return render(request, 'register.html')
 
 
-def getDatabase(request):
-    if request.method == "POST":
-        dbx = sqlite3.connect("db.sqlite3")
-        cursor = dbx.cursor()
+def get_db(request):
+    try:
+        if request.method == "POST":
+            dbx = sqlite3.connect("db.sqlite3")
+            cursor = dbx.cursor()
 
-        jisajili = cursor.execute("SELECT * FROM TamptoProject_sajili").fetchall()
-        michango = cursor.execute("SELECT * FROM TamptoProject_michango").fetchall()
+            jisajili = cursor.execute("SELECT * FROM TamptoProject_sajili").fetchall()
+            michango = cursor.execute("SELECT * FROM TamptoProject_michango").fetchall()
 
-        return json.dumps({"jisajili":jisajili, "michango":michango})
+            return json.dumps({"jisajili":jisajili, "michango":michango})
+    except Exception as e:
+        return 500
