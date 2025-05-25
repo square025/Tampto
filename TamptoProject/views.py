@@ -31,7 +31,7 @@ def register(request):
     return render(request, 'register.html')
 
 def tampro_admin(request):
-    return render(request, 'tampro-admin.html')
+    return render(request, 'tampro.html')
 
 def contribution(request):
     if request.method == "POST":
