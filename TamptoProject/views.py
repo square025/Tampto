@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from datetime import datetime
 from .models import michango ,sajili
 import sqlite3
@@ -86,7 +87,7 @@ def registration(request):
         return redirect('index')
     return render(request, 'register.html')
 
-# @csrf_exempt
+@csrf_exempt
 def get_db(request):
     try:
         if request.method == "POST":
@@ -96,6 +97,6 @@ def get_db(request):
             jisajili = cursor.execute("SELECT * FROM TamptoProject_sajili").fetchall()
             michango = cursor.execute("SELECT * FROM TamptoProject_michango").fetchall()
 
-            return json.dumps({"jisajili":jisajili, "michango":michango})
+            return JsonResponse({"jisajili":jisajili, "michango":michango})
     except Exception as e:
         return 500

@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-vd76ibw8db_4b*i*tjo!8um8-z&ldx!8)zjv9ktksmh$$juw(@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['tampto.onrender.com','tampro.run']
+ALLOWED_HOSTS = ['tampto.onrender.com','tampro.run', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = [
     'https://tampto.onrender.com',
     'https://tampro.run',

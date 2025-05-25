@@ -56,6 +56,7 @@ const adminCounterCard = document.getElementById('admin-counter-card');
     const addContributionForm = document.getElementById('add-contribution-form');
 
     const mainContentTitle = document.getElementById('main-content-title');
+    let notificationShown = false;
 
 
    
@@ -64,7 +65,6 @@ const adminCounterCard = document.getElementById('admin-counter-card');
         
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
-        
        
         const admin = admins.find(a => a.email === email && a.password === password);
         
@@ -90,7 +90,7 @@ const adminCounterCard = document.getElementById('admin-counter-card');
          
             showSection('dashboard');
 
-      
+            notificationShown = true;
             showNotification('Login successful', `Welcome back, ${admin.firstName}!`, 'success');
         } else {
             showNotification('Login failed', 'Invalid email or password', 'danger');
@@ -113,10 +113,11 @@ const adminCounterCard = document.getElementById('admin-counter-card');
         adminsCount.textContent = '0';
         newNotificationsCount.textContent = '0';
      
+
         registrationsBody.innerHTML = '';
         contributionsBody.innerHTML = '';
-        allUsersBody.innerHTML = '';
-        allContributionsBody.innerHTML = '';
+        // allUsersBody.innerHTML = '';
+        // allContributionsBody.innerHTML = '';
         adminsBody.innerHTML = '';
         allAdminsBody.innerHTML = '';
         notificationsBody.innerHTML = '';
@@ -153,7 +154,7 @@ const adminCounterCard = document.getElementById('admin-counter-card');
     }
 
     function loadRecentRegistrations() {
-        registrationsBody.innerHTML = '';
+        // registrationsBody.innerHTML = '';
       
         const recent = registrations.slice(-5).reverse(); 
         recent.forEach(reg => {
@@ -172,7 +173,7 @@ const adminCounterCard = document.getElementById('admin-counter-card');
     }
 
     function loadRecentContributions() {
-        contributionsBody.innerHTML = '';
+        // contributionsBody.innerHTML = '';
     
         const recent = contributions.slice(-5).reverse();
         recent.forEach(con => {
@@ -190,7 +191,7 @@ const adminCounterCard = document.getElementById('admin-counter-card');
         });
     }
     function loadAllUsers() {
-        allUsersBody.innerHTML = '';
+        // allUsersBody.innerHTML = '';
         registrations.forEach(reg => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -207,7 +208,7 @@ const adminCounterCard = document.getElementById('admin-counter-card');
     }
 
     function loadAllContributions() {
-        allContributionsBody.innerHTML = '';
+        // allContributionsBody.innerHTML = '';
         contributions.forEach(con => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -536,21 +537,71 @@ const adminCounterCard = document.getElementById('admin-counter-card');
 
 function fetchAll(){
     function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
     }
 
-    const reBody = document.getElementById("registrations-body");
-    const coBody = document.getElementById("contributions-body");
+    let reBody = document.querySelector("#registrations-body");
+    let coBody = document.querySelector("#contributions-body");
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/get_db/", true);
-    // xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+    console.log(getCookie('csrftoken'));
+    xhr.open("POST", "/get-db/", true);
+    xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
     xhr.send();
     xhr.onload = ()=>{
         if(xhr.status == 200 && xhr.readyState == 4){
-            let jsonRSP = JSON.parse(xhr.responseText);
-            console.log(jsonRSP);
+            setTimeout(()=>{
+                let jsonRSP = JSON.parse(xhr.responseText);
+                let jisajili = jsonRSP.jisajili;
+                let jisajiliMain = document.querySelector("#all-users-body");
+                jisajili.forEach(sajili=>{
+                    let previousSajili = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+                    let newTimeout = setInterval(()=>{
+                        if(!previousSajili.includes(sajili) && notificationShown){
+                            notificationShown = false;
+                            showNotification("New User Registered.", `User with email ${sajili[3]} was registered successfully!!!`, "success")
+                        }else if(previousSajili.includes(sajili) && !notificationShown){
+                            clearInterval(newTimeout);
+                        };
+                    }, 1000);
+                    let innerHtml = `<tr>
+                        <td>${sajili[0]}</td>
+                        <td>${sajili[1]}</td>
+                        <td>${sajili[2]}</td>
+                        <td>${sajili[3]}</td>
+                        <td>${sajili[4]}</td>
+                        <td>${sajili[5]}</td>
+                        <td>${["TSH.20,000", "TSH.40,000"][sajili[8]]}</td>
+                        <td>${sajili[9]}</td></tr>`
+                    let tr = document.createElement("tr");
+                    tr.innerHTML = innerHtml;
+                    reBody.appendChild(tr);
+                });
+                jisajiliMain.innerHTML = reBody.innerHTML;
+            }, 1000);
+
+            setTimeout(()=>{
+                let jsonRSP = JSON.parse(xhr.responseText);
+                let michango = jsonRSP.michango;
+                michango.forEach(mchango=>{
+                    let innerHtml = `<tr>
+                        <td>${mchango[0]}</td>
+                        <td>${mchango[1]}</td>
+                        <td>${mchango[2]}</td>
+                        <td>${mchango[3]}</td>
+                        <td>${mchango[4]}</td>
+                        <td>${mchango[5]}</td>
+                        <td>${mchango[9]}</td>
+                        <td>TZS.${mchango[6]}</td>
+                        <td>${mchango[7]}</td>`
+                    let tr = document.createElement("tr");
+                    tr.innerHTML = innerHtml;
+                    coBody.appendChild(tr);
+                    console.log(michango);
+                });
+                allContributionsBody.innerHTML = coBody.innerHTML;
+            }, 1000);
         }
     }
 }
