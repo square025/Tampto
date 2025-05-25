@@ -30,8 +30,8 @@ def index(request):
 def register(request):
     return render(request, 'register.html')
 
-def admin(request):
-    return render(request, 'admin.html')
+def tampro_admin(request):
+    return render(request, 'tampro-admin.html')
 
 def contribution(request):
     if request.method == "POST":
