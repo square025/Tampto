@@ -539,7 +539,8 @@ function fetchAll(){
     const reBody = document.getElementById("registrations-body");
     const coBody = document.getElementById("contributions-body");
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/get_db", true);
+    xhr.open("POST", "/get_db/", true);
+    xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
     xhr.send();
     xhr.onload = ()=>{
         if(xhr.status == 200 && xhr.readyState == 4){

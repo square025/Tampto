@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from .models import michango ,sajili
 import sqlite3
@@ -84,7 +86,7 @@ def registration(request):
         return redirect('index')
     return render(request, 'register.html')
 
-
+@csrf_exempt
 def get_db(request):
     try:
         if request.method == "POST":

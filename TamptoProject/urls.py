@@ -7,5 +7,5 @@ urlpatterns = [
     path('contribution/', views.contribution, name='contribution'),
     path('registration/', views.registration, name='registration'),
     path('tampro/', views.tampro, name='tampro'),
-    path('get-db', views.get_db, name='get_db'),
+    path('get-db/', views.get_db, name='get_db'),
 ]
