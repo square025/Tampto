@@ -27,11 +27,11 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+def tampro(request):
+    return render(request, 'tampro.html')
+
 def register(request):
     return render(request, 'register.html')
-
-def tampro_admin(request):
-    return render(request, 'tampro_admin.html')
 
 def contribution(request):
     if request.method == "POST":
