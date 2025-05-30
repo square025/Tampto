@@ -18,7 +18,7 @@
     <h3>Register Here</h3>
     <p>Start your Registration now!</p>
 
-    <form id="registrationForm" action="{% url 'registration' %}" method="POST">
+    <form id="registrationForm" action="{% url 'registration' %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="form-row">
         <input type="text" id="fname" name="fname" class="input-style" placeholder="First Name" required />
@@ -60,7 +60,10 @@
           </div>
         </div>
       </div>
-
+      <section>
+        <label for="profile_image">Upload your payment screenshot:</label>
+        <input type="file" name="profile_image" id="profile_image" accept="/*" class="input-style" required />
+      </section>
       <input type="hidden" id="category" name="category" required />
 
       <div class="checkbox-container">

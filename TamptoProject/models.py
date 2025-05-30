@@ -11,6 +11,7 @@ class sajili(models.Model):
     tickets_child = models.CharField(max_length=8, blank=True, null=True)
     tickets_adult = models.CharField(max_length=8, blank=True, null=True)
     is_seen = models.BooleanField(default=False)
+    profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
 
 class michango(models.Model):
     fname = models.CharField(max_length=15)

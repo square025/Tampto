@@ -69,6 +69,7 @@ def registration(request):
         gender = request.POST.get('gender')
         size = request.POST.get('tshirt')
         category = request.POST.get('category')
+        profile_image = request.FILES.get('profile_image')
 
         # Define ticket counts or values as needed
         tickets_child = 1  # or set based on your logic/request
@@ -83,6 +84,7 @@ def registration(request):
             tshirt=size,
             tickets_child=tickets_child if category == 'child' else None,
             tickets_adult=tickets_adult if category == 'adult' else None,
+            profile_image=profile_image,  # new line
         )
         return redirect('index')
     return render(request, 'register.html')

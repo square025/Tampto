@@ -10,6 +10,36 @@
     <link rel="shortcut icon" href="{% static "images/tampro-logo-01.png" %}" type="image/png">
 </head>
 <body>
+    <div class="image-view">
+        <img src="">
+        <style>
+            .image-view{
+                position: fixed;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: rgba(0, 0, 0, 0.8);
+                z-index: 2000;
+                /* backdrop-filter: blur(10px); */
+            }
+            .image-view[active]{display: flex;}
+            .image-view img{
+                position: relative;
+                width: 30%;
+                aspect-ratio: 2/3;
+                background-color: rgb(32, 34, 34);
+                pointer-events: none;
+                object-fit: cover;
+                object-position: center;
+                border-radius: 1rem;
+            }
+        </style>
+    </div>
+
     <div class="login-container" id="login-container">
         <div class="login-box">
             <div class="login-logo">
@@ -151,9 +181,24 @@
                                     <th>T-shirt</th>
                                     <th>Ticket Price</th>
                                     <th>Contact</th>
+                                    <th>Photo</th>
                                 </tr>
                             </thead>
                             <tbody id="registrations-body">
+                                <style>
+                                    td img{
+                                        width: 2.5rem;
+                                        aspect-ratio: 1/1;
+                                        border-radius: 50%;
+                                        position: relative;
+                                        transition: all 0.5s ease;
+                                    }
+                                    {% comment %} img:hover{
+                                        transform-origin: top right;
+                                        transform: scale(2.5);
+                                        border-radius: 0rem;
+                                    } {% endcomment %}
+                                </style>
                             </tbody>
                         </table>
                     </div>
@@ -233,6 +278,7 @@
                                     <th>T-shirt</th>
                                     <th>Ticket Price</th>
                                     <th>Contact</th>
+                                    <th>Photo</th>
                                 </tr>
                             </thead>
                             <tbody id="all-users-body">

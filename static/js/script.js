@@ -107,8 +107,8 @@ const adminCounterCard = document.getElementById('admin-counter-card');
        
         loginForm.reset();
         
-        registeredUsersCount.textContent = '0';
-        totalContributionsAmount.textContent = 'Tshs ' + Number(totalAmount).toLocaleString();
+        // registeredUsersCount.textContent = '0';
+        // totalContributionsAmount.textContent = 'Tshs ' + Number(totalAmount).toLocaleString();
        
         adminsCount.textContent = '0';
         newNotificationsCount.textContent = '0';
@@ -144,9 +144,9 @@ const adminCounterCard = document.getElementById('admin-counter-card');
     }
 
     function loadDashboardData() {
-        registeredUsersCount.textContent = registrations.length;
+        // registeredUsersCount.textContent = registrations.length;
         const totalAmount = contributions.reduce((sum, c) => sum + c.amount, 0).toFixed(2);
-        totalContributionsAmount.textContent = 'Tshs ' + totalAmount;
+        // totalContributionsAmount.textContent = 'Tshs ' + totalAmount;
        
         adminsCount.textContent = admins.length;
      
@@ -551,6 +551,8 @@ function fetchAll(){
     xhr.send();
     xhr.onload = ()=>{
         if(xhr.status == 200 && xhr.readyState == 4){
+            let totalContributions = 0;
+
             setTimeout(()=>{
                 let jsonRSP = JSON.parse(xhr.responseText);
                 let jisajili = jsonRSP.jisajili;
@@ -565,6 +567,7 @@ function fetchAll(){
                             clearInterval(newTimeout);
                         };
                     }, 1000);
+                    console.log(sajili[10].split("/")[1]);
                     let innerHtml = `<tr>
                         <td>${sajili[0]}</td>
                         <td>${sajili[1]}</td>
@@ -573,12 +576,18 @@ function fetchAll(){
                         <td>${sajili[4]}</td>
                         <td>${sajili[5]}</td>
                         <td>${["TSH.20,000", "TSH.40,000"][sajili[8]]}</td>
-                        <td>${sajili[9]}</td></tr>`
+                        <td>${sajili[9]}</td></tr>
+                        <td><img src="../media/${sajili[10].split("/")[1]}"></td></tr>`
                     let tr = document.createElement("tr");
                     tr.innerHTML = innerHtml;
                     reBody.appendChild(tr);
                 });
                 jisajiliMain.innerHTML = reBody.innerHTML;
+                setTimeout(()=>{
+                    console.log(jisajili.length);
+                    registeredUsersCount.textContent = String(jisajili.length);
+                    handleImageDisplay();
+                }, 1000);
             }, 1000);
 
             setTimeout(()=>{
@@ -595,15 +604,31 @@ function fetchAll(){
                         <td>${mchango[9]}</td>
                         <td>TZS.${mchango[6]}</td>
                         <td>${mchango[7]}</td>`
+                    totalContributions += Number(mchango[6]);
                     let tr = document.createElement("tr");
                     tr.innerHTML = innerHtml;
                     coBody.appendChild(tr);
-                    console.log(michango);
                 });
                 allContributionsBody.innerHTML = coBody.innerHTML;
+                totalContributionsAmount.textContent = `Tsh. ${totalContributions}.00`
             }, 1000);
         }
     }
+}
+
+function handleImageDisplay(){
+    const allImages = document.querySelectorAll("img");
+    const imgDisplay = document.querySelector(".image-view");
+    const imgView = imgDisplay.querySelector("img");
+    imgDisplay.onclick = ()=>{
+        imgDisplay.removeAttribute("active");
+    };
+    allImages.forEach(img=>{
+        img.addEventListener("click", ()=>{
+            imgView.src = img.src;
+            imgDisplay.setAttribute("active", "");
+        });
+    });
 }
 
 
